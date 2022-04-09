@@ -1,4 +1,4 @@
-# Scrapbox Radio
+# Scrapbox Radio Maker
 
 共同編集しているScrapboxのページの文字列から、[VOICEVOX](https://voicevox.hiroshiba.jp/)を使いラジオのような音声を作成するプログラムです
 
