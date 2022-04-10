@@ -2,6 +2,9 @@
 
 共同編集しているScrapboxのページの文字列から、[VOICEVOX](https://voicevox.hiroshiba.jp/)を使いラジオのような音声を作成するプログラムです
 
+デモ音声は[こちら](demo/scrapbox-radio-maker.mp3)
+このデータの基となったScrapboxのページは[こちら](https://scrapbox.io/inajob/Scrapbox%E3%83%A9%E3%82%B8%E3%82%AA)
+
 ## 中身
 
 - scrapbox2list.py
