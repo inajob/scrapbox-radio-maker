@@ -20,6 +20,7 @@ yomi = {
 "maker": "メーカー",
 "VOICEVOX": "ボイスボックス",
 "BGM": "ビージーエム",
+"XX": "ばつばつ"
 }
 speakerMap = [
   3,8,10,9,11,12,13,14,16,
@@ -37,6 +38,7 @@ with open(fileName, encoding="utf8") as f:
     unknowns = {}
     authorSpeakerMap = {}
     speakerIndex = 0
+    levelAuthor = [];
 
     for i, line in enumerate(f):
         author = []
@@ -50,6 +52,12 @@ with open(fileName, encoding="utf8") as f:
             else:
                 break;
         line = re.sub('^[ \t　]+', '', line)
+        if len(levelAuthor) <= level:
+            for j in range(level - len(levelAuthor) + 1):
+                levelAuthor.append(None)
+        else:
+            levelAuthor = levelAuthor[:level + 1]
+
         # 話者を記録
         # 末尾にあるicon記法を除去
         authorRe = re.compile(r'\[([^\]]*)\.icon\]$')
@@ -60,6 +68,7 @@ with open(fileName, encoding="utf8") as f:
                 line = authorRe.sub("", line)
                 continue
             break;
+        author.reverse()
 
         # アルファベットを読みに変換
         for w in midashi:
@@ -81,6 +90,7 @@ with open(fileName, encoding="utf8") as f:
                     if speakerIndex >= len(speakerMap):
                         speakerIndex = 0
                 speakerNo = speakerMap[authorSpeakerMap[author[0]]]
+                levelAuthor[level] = author[0]
             else:
                 if len(line) == 0:
                     kind = "silence"
@@ -91,7 +101,13 @@ with open(fileName, encoding="utf8") as f:
                         speakerNo = 2;
                     else:
                         kind = "speak"
-        #print(level, speakerNo, kind, line, author)
+                        author = levelAuthor[level - 1]
+                        if author:
+                            speakerNo = speakerMap[authorSpeakerMap[author]]
+                        else:
+                            kind = "narration"
+                            speakerNo = 2
+        #print(level, levelAuthor, speakerNo, kind, line, author)
         print(str(speakerNo) + "," + line)
 
     if(len(unknowns.keys()) > 0):
