@@ -16,6 +16,10 @@ yomi = {
 "slack": "スラック",
 "evernote": "エバーノート",
 "bot": "ボット",
+"radio": "ラジオ",
+"maker": "メーカー",
+"VOICEVOX": "ボイスボックス",
+"BGM": "ビージーエム",
 }
 speakerMap = [
   3,8,10,9,11,12,13,14,16,
@@ -37,8 +41,8 @@ with open(fileName, encoding="utf8") as f:
     for i, line in enumerate(f):
         author = []
         kind = ""
-        speakerNo = 2;
         line = line.rstrip()
+        level = 0
         # インデントを数える
         for c in line:
             if c == "\t" or c == " " or c == "　":
@@ -67,6 +71,7 @@ with open(fileName, encoding="utf8") as f:
 
         if i == 0:
             kind = "title"
+            speakerNo = 2;
         else:
             if len(author) > 0:
                 kind = "speak"
@@ -81,7 +86,11 @@ with open(fileName, encoding="utf8") as f:
                     kind = "silence"
                     speakerNo = 0
                 else:
-                    kind = "narration"
+                    if level == 0:
+                        kind = "narration"
+                        speakerNo = 2;
+                    else:
+                        kind = "speak"
         #print(level, speakerNo, kind, line, author)
         print(str(speakerNo) + "," + line)
 
